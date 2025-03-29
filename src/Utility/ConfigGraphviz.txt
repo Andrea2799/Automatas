@@ -1,8 +1,9 @@
 digraph g
 {
-Q0 -> Q4 [label="a"];
-Q4 -> Q6 [label="a"];
-Q6 -> Q6 [label="a"];
-Q6 -> Q6 [label="a"];
-Q6 -> Q6 [label="a"];
+rankdir=LR;
+Q6 -> Q6 [label="a", color=red];
+Q6 -> Q7 [label="b", color=blue];
+Q7 -> Q6 [label="a", color=red];
+Q7 -> Q7 [label="b", color=blue];
+Q0 [color=red];
 }

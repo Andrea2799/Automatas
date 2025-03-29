@@ -5,7 +5,4 @@ Q4 -> Q6 [label="a"];
 Q6 -> Q6 [label="a"];
 Q6 -> Q6 [label="a"];
 Q6 -> Q6 [label="a"];
-Q6 -> Q6 [label="a"];
-Q6 -> Q6 [label="a"];
-Q6 -> Q6 [label="a"];
 }

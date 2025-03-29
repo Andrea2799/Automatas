@@ -17,11 +17,14 @@ public class Automaton {
         }
 
         this.symbols = symbols;
-
     }
 
     public boolean evaluate(String inputString) {
-        inputString = inputString.toLowerCase();
+        // Verificar si hay mayúsculas en la cadena
+        if (!inputString.equals(inputString.toLowerCase())) {
+            System.out.println("Error: No se permiten mayúsculas en la entrada.");
+            return false; // Rechazar la cadena si tiene mayúsculas
+        }
 
         for (char symbol : inputString.toCharArray()) {
             if (!symbols.contains(String.valueOf(symbol))) {
@@ -44,20 +47,20 @@ public class Automaton {
         return currentNode.isFinal();
     }
 
-private Node getNextNode(Node currentNode, char symbol, List<String> symbols) {
-    if (symbols.size() < 2) {
+    private Node getNextNode(Node currentNode, char symbol, List<String> symbols) {
+        if (symbols.size() < 2) {
+            return null;
+        }
+
+        if (String.valueOf(symbol).equals(symbols.get(0))) {
+            return currentNode.getLinkA();
+        } else if (String.valueOf(symbol).equals(symbols.get(1))) {
+            return currentNode.getLinkB();
+        }
         return null;
     }
 
-    if (String.valueOf(symbol).equals(symbols.get(0))) {
-        return currentNode.getLinkA();
-    } else if (String.valueOf(symbol).equals(symbols.get(1))) {
-        return currentNode.getLinkB();
-    }
-    return null;
-}
-
-    public void Show(){
+    public void Show() {
         Set<Node> visited = new HashSet<>();
         Queue<Node> queue = new LinkedList<>();
         StringBuilder ConfigGraphviz = new StringBuilder("graph g\n{\n");
@@ -69,7 +72,7 @@ private Node getNextNode(Node currentNode, char symbol, List<String> symbols) {
             Node node = queue.poll();
 
             if (node.getLinkA() != null) {
-                ConfigGraphviz.append(String.format("%s -> %s [label=\"a\"];\n",node.getName(),node.getLinkA().getName()));
+                ConfigGraphviz.append(String.format("%s -> %s [label=\"a\"];\n", node.getName(), node.getLinkA().getName()));
                 if (!visited.contains(node.getLinkA())) {
                     queue.add(node.getLinkA());
                     visited.add(node.getLinkA());
@@ -77,7 +80,7 @@ private Node getNextNode(Node currentNode, char symbol, List<String> symbols) {
             }
 
             if (node.getLinkB() != null) {
-                ConfigGraphviz.append(String.format("%s -> %s [label=\"b\"];\n",node.getName(),node.getLinkB().getName()));
+                ConfigGraphviz.append(String.format("%s -> %s [label=\"b\"];\n", node.getName(), node.getLinkB().getName()));
                 if (!visited.contains(node.getLinkB())) {
                     queue.add(node.getLinkB());
                     visited.add(node.getLinkB());
@@ -88,5 +91,4 @@ private Node getNextNode(Node currentNode, char symbol, List<String> symbols) {
         ConfigGraphviz.append("}\n");
         GraphvizController.generate(ConfigGraphviz.toString());
     }
-
 }
